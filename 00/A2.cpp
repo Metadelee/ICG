@@ -4,7 +4,7 @@
 // Project      : Sheet 1 : Exercise 2 Iterative computation
 // Authors      : Lina Ouro,  Letitia Parcalabescu, Anushalakshmi Manila
 // Date     : Oct  26, 2016
-// Description  : Compute the area and circumference of a circle with given radius
+// Description  : Compute the value of recursive function for different inputs
 //
 //--------------------------------------------------------------------------------------
 // compiled with g++ -std=c++11
