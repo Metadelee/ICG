@@ -10,6 +10,7 @@
 #include <cmath>
 #include <vector>
 #include <string>
+#include <fstream>
 using namespace std;
 
 int available_id = 1;
@@ -139,22 +140,48 @@ public:
     // Prints each Mesh in the list in consecutive order,
     // starting at the head and ending at the tail.
     // Prints list data to the console.
-    void printScene()
-    {
-        Mesh * p = head;
-        Mesh * q = head;
-        cout << "n---------------------------n";
-        cout << "Mesh Object n";
-        int count = 001;
-        while (q)
+    void printScene( bool toFile)
+    {   
+        if (toFile == 1)
         {
-            p = q;
-            cout << "n-----------------------------n" << endl;
-            cout << "t id: " << count << ", object name: <<" << p -> name
-                 << ">>, number faces: " << p -> num_faces << ", number vertices: " << p->num_vertices 
-                 << ", scale :" << p->scale << endl;
-            q = p -> next;
-            count++;
+            ofstream myfile;
+            myfile.open ("objects.txt");
+
+            Mesh * p = head;
+            Mesh * q = head;
+            myfile << "n---------------------------n";
+            myfile << "Mesh Object n";
+            int count = 001;
+            while (q)
+            {
+                p = q;
+                myfile << "n-----------------------------n" << endl;
+                myfile << "t id: " << count << ", object name: <<" << p -> name
+                     << ">>, number faces: " << p -> num_faces << ", number vertices: " << p->num_vertices 
+                     << ", scale :" << p->scale << endl;
+                q = p -> next;
+                count++;
+            }
+            
+            myfile.close();
+        }
+        else
+        {
+            Mesh * p = head;
+            Mesh * q = head;
+            cout << "n---------------------------n";
+            cout << "Mesh Object n";
+            int count = 001;
+            while (q)
+            {
+                p = q;
+                cout << "n-----------------------------n" << endl;
+                cout << "t id: " << count << ", object name: <<" << p -> name
+                     << ">>, number faces: " << p -> num_faces << ", number vertices: " << p->num_vertices 
+                     << ", scale :" << p->scale << endl;
+                q = p -> next;
+                count++;
+            }
         }
     }
     
@@ -225,13 +252,19 @@ int main ()
             {
                 if (action == 3)
                 {
-                    myList.printScene();
+                    myList.printScene(0);
                 }
-
             }
         }
         cout << "What do you want to do next?" << endl;
         cin >> action;
-    }    
+    }
+
+    // STEP 3. Store current objects in a text file
+    if (action == 0)
+    {
+        myList.printScene(1);
+    }
+
     return 0;
 }
