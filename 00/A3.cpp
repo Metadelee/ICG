@@ -2,33 +2,39 @@
 
 // compiled with g++ -std=c++11
 
+/*
+1. The data structure is a linked list `Scene Manager` that has `Mesh` objects as nodes as seen in the implementation below.
+*/
+
 #include <iostream>
 #include <cmath>
 #include <vector>
 #include <string>
 using namespace std;
 
-int available_id = 0;
+int available_id = 1;
 
 class Mesh
 {   
 public:
-    int id; int num_vertices; std::vector<float> center_position; int num_faces; string name; int scale;
+    int id;
+    int num_vertices;
+    std::vector<float> center_position;
+    int num_faces;
+    string name;
+    int scale;
     Mesh * next;
 
-    Mesh()
+    // constructor that assigns automatically an id
+    Mesh(int num_vertice, vector<float> center_positio, int num_face, string nam, int scal)
     {   
         id = available_id;
         available_id ++;
-    }
-    Mesh(int idd, int num_vertices, vector<float> center_position, int num_faces, string name, int scale)
-    {   
-        id = idd;
-        num_vertices = num_vertices;
-        center_position = center_position;
-        num_faces = num_faces;
-        name = name;
-        scale = scale;
+        num_vertices = num_vertice;
+        center_position = center_positio;
+        num_faces = num_face;
+        name = nam;
+        scale = scal;
         next = NULL;
     }
 };
@@ -47,7 +53,7 @@ public:
     {   
         vector<float> null;
         null = {0,0};
-        head = new Mesh(0, 0, null, 0,"a Head has no name", 0);
+        head = new Mesh(0, null, 0, "a Head has no name", 0);
         listLength = 0;
     }
     
@@ -139,13 +145,14 @@ public:
         Mesh * q = head;
         cout << "n---------------------------n";
         cout << "Mesh Object n";
-        int count = 0;
+        int count = 001;
         while (q)
         {
             p = q;
-            cout << "n-----------------------------n";
-            cout << "t position: " << count << endl;
-            cout << "t object: " << p -> name << endl;
+            cout << "n-----------------------------n" << endl;
+            cout << "t id: " << count << ", object name: <<" << p -> name
+                 << ">>, number faces: " << p -> num_faces << ", number vertices: " << p->num_vertices 
+                 << ", scale :" << p->scale << endl;
             q = p -> next;
             count++;
         }
@@ -167,63 +174,64 @@ public:
 
 
 int main () 
-{
-    // STEP 1: Create some unlinked mesh objects.
-    vector<float> position = {2,2};
-    Mesh * A = new Mesh(2,2, position,2,"blaName",2);
-
-
-    
-    // Mesh * B = new Mesh;
-    // B -> song = "I Stand Alone";
-    // B -> artist = "Godsmack";
-    
-    // Mesh * C = new Mesh;
-    // C -> song = "Heir Apparent";
-    // C -> artist = "Opeth";
-    
-    // Mesh * D = new Mesh;
-    // D -> song = "Fear of the Dark";
-    // D -> artist = "Iron Maiden";
-    
-    // Mesh * E = new Mesh;
-    // E -> song = "Blue Monday";
-    // E -> artist = "New Order";
-    
-    // Mesh * F = new Mesh;
-    // F -> song = "The Moth";
-    // F -> artist = "Aimee Mann";
-   
-    // STEP 2: Build a list of three song Meshs by appending to end of list.
+{  
     SceneManager myList;
-
+    vector<float> pos = {2,2};
+    Mesh * A = new Mesh(2, pos, 2, "Hans", 2);
     myList.insertMesh(A, 1);
-    myList.printScene();
 
-    // // myList.insertMesh(B, 2);
-    // // myList.insertMesh(C, 3);
-    // // myList.insertMesh(D, 4);
-    // myList.printScene();
-    
-    // // STEP 3: Insert a Mesh into middle of list.
-    // myList.insertMesh(E, 2);
-    // myList.printScene();
-    
-    // // STEP 4: Insert Mesh at the front of list.
-    // myList.insertMesh(F,1);
-    // myList.printScene();
-    
-    // // STEP 5: Remove the last Mesh from the list.
-    // myList.removeMesh(6);
-    // myList.printScene();
-    
-    // // STEP 6: Remove the first Mesh from the list.
-    // myList.removeMesh(1);
-    // myList.printScene();
-    
-    // // STEP 7: Remove a Mesh from the middle of the list.
-    // myList.removeMesh(3);
-    // myList.printScene();
-    
+    int action;
+    cout << "What do you want to do?" << endl;
+    cout << "for adding mesh object, type 1" << endl;
+    cout << "for removing mesh object, type 2" << endl;
+    cout << "for listing objects, type 3" << endl;
+    cout << "for exiting the program, type 0" << endl;
+
+    cin >> action;
+
+    while (action != 0)
+    {
+        if (action == 1)
+        {
+            int num_vert;
+            float x; float y;
+            int num_faces;
+            string name;
+            int scale;
+
+            // STEP 2: Create a mesh object based on user input:
+            cout << "Please provide the information for creating a new mesh object:"<<endl;
+            cout << "Number of vertices: "; cin >> num_vert;
+            cout << "Vector position of center (x, y): "; cin >> x >> y;
+            vector<float> position = {x, y};
+            cout << "Number of faces: "; cin >> num_faces;
+            cout << "Name: "; cin >> name;
+            cout << "Scaling properties: "; cin >> scale;
+
+            Mesh * user = new Mesh(num_vert, position, num_faces, name, scale);
+
+            // add the mesh object on position one in the list
+            myList.insertMesh(user, 2);
+        }
+        else
+        {
+            if (action == 2)
+            {   
+                int id;
+                cout << "Please input the id of the object you want to delete:"; cin >> id;
+                myList.removeMesh(id);
+            }
+            else
+            {
+                if (action == 3)
+                {
+                    myList.printScene();
+                }
+
+            }
+        }
+        cout << "What do you want to do next?" << endl;
+        cin >> action;
+    }    
     return 0;
 }
