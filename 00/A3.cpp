@@ -3,8 +3,8 @@
 // Subject		: Computer Graphics
 // Project		: Sheet 1 : Exercise 3 Scene Manager Class
 // Authors		: Lina Ouro,  Letitia Parcalabescu, Anushalakshmi Manila
-// Date		: Oct  26, 2016
-// Description	: Compute the area and circumference of a circle with given radius
+// Date		    : Oct  26, 2016
+// Description	: Scene manager class implementation using single linked list
 
 // --------------------------------------------------------------------------------------
 
