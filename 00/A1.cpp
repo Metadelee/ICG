@@ -1,3 +1,14 @@
+//--------------------------------------------------------------------------------------
+//
+// Subject      : Computer Graphics
+// Project      : Sheet 1 : Exercise 1 Circle calculation
+// Authors      : Lina Ouro,  Letitia Parcalabescu, Anushalakshmi Manila
+// Date     : Oct  26, 2016
+// Description  : Compute the area and circumference of a circle with given radius
+//
+//--------------------------------------------------------------------------------------
+// compiled with g++ -std=c++11
+
 #include <iostream>
 #include <cmath>
 using namespace std;

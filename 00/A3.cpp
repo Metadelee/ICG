@@ -1,5 +1,14 @@
-// inspiration for the Linked List: http://pumpkinprogrammer.com/2014/06/13/c-tutorial-intro-to-linked-lists/
+// --------------------------------------------------------------------------------------
 
+// Subject		: Computer Graphics
+// Project		: Sheet 1 : Exercise 3 Scene Manager Class
+// Authors		: Lina Ouro,  Letitia Parcalabescu, Anushalakshmi Manila
+// Date		: Oct  26, 2016
+// Description	: Compute the area and circumference of a circle with given radius
+
+// --------------------------------------------------------------------------------------
+
+// inspiration for the Linked List: http://pumpkinprogrammer.com/2014/06/13/c-tutorial-intro-to-linked-lists/
 // compiled with g++ -std=c++11 -Wno-narrowing 
 
 /*
