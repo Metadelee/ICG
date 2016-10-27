@@ -11,26 +11,26 @@ using namespace std;
 int available_id = 0;
 
 class Mesh
-{	
+{   
 public:
-	int id;	int num_vertices; std::vector<float> center_position; int num_faces; string name; int scale;
-  	Mesh * next;
+    int id; int num_vertices; std::vector<float> center_position; int num_faces; string name; int scale;
+    Mesh * next;
 
-	Mesh()
-	{	
-		id = available_id;
-		available_id ++;
-	}
-	Mesh(int idd, int num_vertices, vector<float> center_position, int num_faces, string name, int scale)
-	{	
-		id = idd;
-		num_vertices = num_vertices;
-		center_position = center_position;
-		num_faces = num_faces;
-		name = name;
-		scale = scale;
-		next = NULL;
-	}
+    Mesh()
+    {   
+        id = available_id;
+        available_id ++;
+    }
+    Mesh(int idd, int num_vertices, vector<float> center_position, int num_faces, string name, int scale)
+    {   
+        id = idd;
+        num_vertices = num_vertices;
+        center_position = center_position;
+        num_faces = num_faces;
+        name = name;
+        scale = scale;
+        next = NULL;
+    }
 };
 
 class SceneManager
@@ -44,11 +44,11 @@ private:
 public:
     // Default Constructor creates the head Mesh.
     SceneManager()
-    {	
-    	vector<float> null;
-    	null = {0,0};
-    	head = new Mesh(0, 0, null, 0,"a Head has no name", 0);
-		listLength = 0;
+    {   
+        vector<float> null;
+        null = {0,0};
+        head = new Mesh(0, 0, null, 0,"a Head has no name", 0);
+        listLength = 0;
     }
     
     // Setter adds a Mesh to the list at a given position.
@@ -57,42 +57,42 @@ public:
     // Returns true if the operation is successful.
     bool insertMesh( Mesh * newMesh, int position )
     {
-	    if ((position <= 0) || (position > listLength + 1))
-	    {
-	        cout << "nError: the given position is out of range.n";
-	        return false;
-	    }
-	    if (head -> next == NULL) 
-	    {
-	        head -> next = newMesh;
-	        listLength++;
-	        return true;
-	    } 
-	    int count = 0;
-	    Mesh * p = head;
-	    Mesh * q = head;
-	    while (q)
-	    { 
-	        if (count == position)
-	        {
-	            p -> next = newMesh;
-	            newMesh -> next = q;
-	            listLength++;
-	            return true;
-	        }
-	        p = q;
-	        q = p -> next;
-	        count++;
-	    }
-	    if (count == position)
-	    {
-	        p -> next = newMesh;
-	        newMesh -> next = q;
-	        listLength++;
-	        return true;
-	    }
-	    cout << "nError: Mesh was not added to list.n";
-	    return false;
+        if ((position <= 0) || (position > listLength + 1))
+        {
+            cout << "nError: the given position is out of range.n";
+            return false;
+        }
+        if (head -> next == NULL) 
+        {
+            head -> next = newMesh;
+            listLength++;
+            return true;
+        } 
+        int count = 0;
+        Mesh * p = head;
+        Mesh * q = head;
+        while (q)
+        { 
+            if (count == position)
+            {
+                p -> next = newMesh;
+                newMesh -> next = q;
+                listLength++;
+                return true;
+            }
+            p = q;
+            q = p -> next;
+            count++;
+        }
+        if (count == position)
+        {
+            p -> next = newMesh;
+            newMesh -> next = q;
+            listLength++;
+            return true;
+        }
+        cout << "nError: Mesh was not added to list.n";
+        return false;
     }
 
     
@@ -100,34 +100,34 @@ public:
     // Returns true if the operation is successful.
     bool removeMesh( int position )
     {
-    	if ((position <= 0) || (position > listLength + 1))
-	    {
-	        cout << "nError: the given position is out of range.n";
-	        return false;
-	    }
-	    if (head -> next == NULL)
-	    {
-	       cout << "nError: there is nothing to remove.n";
-	       return false;
-	    }
-	    int count = 0;
-	    Mesh * p = head;
-	    Mesh * q = head;
-	    while (q) 
-	    {
-	        if (count == position)
-	        {
-	            p -> next = q -> next;
-	            delete q;
-	            listLength--;
-	            return true;
-	        }
-	        p = q;
-	        q = p -> next;
-	        count++;
-	    }
-	    cout << "nError: nothing was removed from the list.n";
-	    return false;
+        if ((position <= 0) || (position > listLength + 1))
+        {
+            cout << "nError: the given position is out of range.n";
+            return false;
+        }
+        if (head -> next == NULL)
+        {
+           cout << "nError: there is nothing to remove.n";
+           return false;
+        }
+        int count = 0;
+        Mesh * p = head;
+        Mesh * q = head;
+        while (q) 
+        {
+            if (count == position)
+            {
+                p -> next = q -> next;
+                delete q;
+                listLength--;
+                return true;
+            }
+            p = q;
+            q = p -> next;
+            count++;
+        }
+        cout << "nError: nothing was removed from the list.n";
+        return false;
     }
 
     // Prints each Mesh in the list in consecutive order,
@@ -135,34 +135,34 @@ public:
     // Prints list data to the console.
     void printScene()
     {
-    	Mesh * p = head;
-	    Mesh * q = head;
-	    cout << "n---------------------------n";
-	    cout << "Mesh Object n";
-	    int count = 0;
-	    while (q)
-	    {
-	        p = q;
-	        cout << "n-----------------------------n";
-	        cout << "t position: " << count << endl;
-	        cout << "t object: " << p -> name << endl;
-	        q = p -> next;
-	        count++;
-	    }
+        Mesh * p = head;
+        Mesh * q = head;
+        cout << "n---------------------------n";
+        cout << "Mesh Object n";
+        int count = 0;
+        while (q)
+        {
+            p = q;
+            cout << "n-----------------------------n";
+            cout << "t position: " << count << endl;
+            cout << "t object: " << p -> name << endl;
+            q = p -> next;
+            count++;
+        }
     }
     
     // Destructor de-allocates memory used by the list.
     ~SceneManager()
     {
-	    Mesh * p = head;
-	    Mesh * q = head;
-	    while (q)
-	    {
-	        p = q;
-	        q = p -> next;
-	        if (q) delete p;
-	    }
-	}
+        Mesh * p = head;
+        Mesh * q = head;
+        while (q)
+        {
+            p = q;
+            q = p -> next;
+            if (q) delete p;
+        }
+    }
 };
 
 
