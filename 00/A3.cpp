@@ -1,30 +1,35 @@
 // inspiration for the Linked List: http://pumpkinprogrammer.com/2014/06/13/c-tutorial-intro-to-linked-lists/
 
+// compiled with g++ -std=c++11
+
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <string>
 using namespace std;
 
-int available_id;
+int available_id = 0;
 
-struct Mesh
-{
+class Mesh
+{	
+public:
 	int id;	int num_vertices; std::vector<float> center_position; int num_faces; string name; int scale;
   	Mesh * next;
 
 	Mesh()
-	{
+	{	
 		id = available_id;
 		available_id ++;
 	}
 	Mesh(int idd, int num_vertices, vector<float> center_position, int num_faces, string name, int scale)
-	{
+	{	
 		id = idd;
 		num_vertices = num_vertices;
 		center_position = center_position;
 		num_faces = num_faces;
 		name = name;
 		scale = scale;
+		next = NULL;
 	}
 };
 
@@ -39,14 +44,10 @@ private:
 public:
     // Default Constructor creates the head Mesh.
     SceneManager()
-    {
-		head -> id = 0;
-		head -> num_vertices = 0;
-		head -> center_position = {0,0};
-		head -> num_faces = 0;
-		head -> name = "the head has no name";
-		head -> scale = 0;
-		head -> next = NULL;
+    {	
+    	vector<float> null;
+    	null = {0,0};
+    	head = new Mesh(0, 0, null, 0,"a Head has no name", 0);
 		listLength = 0;
     }
     
@@ -170,6 +171,8 @@ int main ()
     // STEP 1: Create some unlinked mesh objects.
     vector<float> position = {2,2};
     Mesh * A = new Mesh(2,2, position,2,"blaName",2);
+
+
     
     // Mesh * B = new Mesh;
     // B -> song = "I Stand Alone";
@@ -190,14 +193,17 @@ int main ()
     // Mesh * F = new Mesh;
     // F -> song = "The Moth";
     // F -> artist = "Aimee Mann";
-    
+   
     // STEP 2: Build a list of three song Meshs by appending to end of list.
     SceneManager myList;
+
     myList.insertMesh(A, 1);
-    // myList.insertMesh(B, 2);
-    // myList.insertMesh(C, 3);
-    // myList.insertMesh(D, 4);
     myList.printScene();
+
+    // // myList.insertMesh(B, 2);
+    // // myList.insertMesh(C, 3);
+    // // myList.insertMesh(D, 4);
+    // myList.printScene();
     
     // // STEP 3: Insert a Mesh into middle of list.
     // myList.insertMesh(E, 2);
