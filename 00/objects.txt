@@ -1,0 +1,14 @@
+object name: Hans
+number vertices: 1681692777
+vector position center x: 1.80429e+09
+vector position center y: 8.46931e+08
+number faces: 1714636915
+scale : 1957747793
+   
+object name:  Hans
+number vertices: 55
+vector position center x: 57
+vector position center y: 56
+number faces: 53
+scale : 51
+   

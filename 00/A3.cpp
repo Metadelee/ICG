@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <time.h>
 using namespace std;
 
 int available_id = 1;
@@ -46,9 +47,9 @@ private:
     // Head of the list contains no mesh object, 
     // but points to the object playlist.
     Mesh * head;
-    int listLength;
     
 public:
+    int listLength;
     // Default Constructor creates the head Mesh.
     SceneManager()
     {   
@@ -127,6 +128,7 @@ public:
                 p -> next = q -> next;
                 delete q;
                 listLength--;
+                available_id --;
                 return true;
             }
             p = q;
@@ -149,18 +151,24 @@ public:
 
             Mesh * p = head;
             Mesh * q = head;
-            myfile << "n---------------------------n";
-            myfile << "Mesh Object n";
-            int count = 001;
+            int count = 0;
             while (q)
-            {
-                p = q;
-                myfile << "n-----------------------------n" << endl;
-                myfile << "t id: " << count << ", object name: <<" << p -> name
-                     << ">>, number faces: " << p -> num_faces << ", number vertices: " << p->num_vertices 
-                     << ", scale :" << p->scale << endl;
+            {   
+                if ( q!= head)
+                {
+                    p = q;
+                    myfile << "object name: " << p -> name << endl;
+                    myfile << "number vertices: " << p->num_vertices << endl;
+                    myfile << "vector position center x: " << p-> center_position[0] << endl;
+                    myfile << "vector position center y: " << p-> center_position[1] << endl;
+                    myfile << "number faces: " << p -> num_faces << endl;
+                    myfile << "scale : " << p->scale << endl;
+                    myfile << "   " << endl;
+                    count++;
+                }
+                else
+                    cout << "There are no objects to be printed." << endl;
                 q = p -> next;
-                count++;
             }
             
             myfile.close();
@@ -171,16 +179,23 @@ public:
             Mesh * q = head;
             cout << "n---------------------------n";
             cout << "Mesh Object n";
-            int count = 001;
+            int count = 1;
             while (q)
-            {
-                p = q;
-                cout << "n-----------------------------n" << endl;
-                cout << "t id: " << count << ", object name: <<" << p -> name
-                     << ">>, number faces: " << p -> num_faces << ", number vertices: " << p->num_vertices 
-                     << ", scale :" << p->scale << endl;
+            {   
+                if (q != head)
+                {
+                    p = q;
+                    cout << "n-----------------------------n" << endl;
+                    cout << "t id: " << count << ", object name: <<" << p -> name
+                         << ">>, number faces: " << p -> num_faces << ", number vertices: " << p->num_vertices 
+                         << ", scale :" << p->scale << endl;
+                    q = p -> next;
+                    count++;
+                }
+                else
+                    cout <<"There are no objects to be printed." << endl;
                 q = p -> next;
-                count++;
+
             }
         }
     }
@@ -203,8 +218,50 @@ public:
 int main () 
 {  
     SceneManager myList;
-    vector<float> pos = {2,2};
-    Mesh * A = new Mesh(2, pos, 2, "Hans", 2);
+
+    int num_vert;
+    float x; float y;
+    int num_faces;
+    string name;
+    int scale;
+
+    string line;
+    ifstream myfile ("objects.txt");
+    int line_count = 1;
+    if (myfile.is_open())
+        {   
+            cout << "Reading data from file ..." <<endl;
+            while ( getline (myfile,line) )
+            {   
+                if (line_count % 7 == 1)
+                    name = line.substr(line.find(":") + 1); ;
+                if (line_count % 7 == 2)
+                    num_vert = line.back();
+                if (line_count % 7 == 3)
+                    x = line.back();
+                if (line_count % 7 == 4)
+                    y = line.back();
+                if (line_count % 7 == 5)
+                    num_faces = line.back();
+                if (line_count % 7 == 6)
+                    scale = line.back();
+                if (line_count % 7 == 0)
+                {   
+                    cout << "Inserting object from database..." <<endl;
+                    vector<float> position = {x, y};
+                    Mesh * user = new Mesh(num_vert, position, num_faces, name, scale);
+                    myList.insertMesh(user, myList.listLength+1);
+                }
+                line_count++;
+            }
+          myfile.close();
+        }
+
+      else cout << "Unable to open file"; 
+
+    // manually introduce an object here. For debugging purposes.
+    vector<float> pos = {rand(), rand()};
+    Mesh * A = new Mesh(rand(), pos, rand(), "Hans", rand());
     myList.insertMesh(A, 1);
 
     int action;
@@ -220,12 +277,6 @@ int main ()
     {
         if (action == 1)
         {
-            int num_vert;
-            float x; float y;
-            int num_faces;
-            string name;
-            int scale;
-
             // STEP 2: Create a mesh object based on user input:
             cout << "Please provide the information for creating a new mesh object:"<<endl;
             cout << "Number of vertices: "; cin >> num_vert;
@@ -238,7 +289,7 @@ int main ()
             Mesh * user = new Mesh(num_vert, position, num_faces, name, scale);
 
             // add the mesh object on position one in the list
-            myList.insertMesh(user, 2);
+            myList.insertMesh(user, myList.listLength+1);
         }
         else
         {
