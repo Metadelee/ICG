@@ -1,6 +1,6 @@
 // inspiration for the Linked List: http://pumpkinprogrammer.com/2014/06/13/c-tutorial-intro-to-linked-lists/
 
-// compiled with g++ -std=c++11
+// compiled with g++ -std=c++11 -Wno-narrowing 
 
 /*
 1. The data structure is a linked list `Scene Manager` that has `Mesh` objects as nodes as seen in the implementation below.
