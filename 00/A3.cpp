@@ -234,6 +234,7 @@ int main ()
     string name;
     int scale;
 
+    // STEP 4: read in mesh objects from file
     string line;
     ifstream myfile ("objects.txt");
     int line_count = 1;
