@@ -25,8 +25,8 @@ For x = 8 we have f(8) = 64, g(8) = -15 and h(8) = 1
 For x = 9 we have f(9) = 81, g(9) = -17 and h(9) = 1
 For x = 10 we have f(10) = 100, g(10) = -19 and h(10) = 1
 
-With the above definition g and h return wrong results, the macro only
-does the textual replacement and thus you would end up with
+With the above definition g and h return wrong results, because the macro only
+does the textual replacement and thus you end up with
 g(1) = 1-1*1-1 = -1
 g(2) = 1-2*1-2 = -3
 ...
