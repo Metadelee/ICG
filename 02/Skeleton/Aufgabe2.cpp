@@ -68,7 +68,9 @@ bool loadMatrix(const char *filename, int **matrix, int& rowCount, int& columnCo
 			cout <<(value) <<"\n";
 			//TODO: Write the stored values "value" to the correct position in the matrix (currentRow, currentColumn)
 			// TODO: this leads to segmentation fault!
-			*matrix[currentRow*columnCount+currentColumn] = value;
+			// *matrix[currentRow*columnCount+currentColumn] = value;
+			// and this leads to Error in `./a.out': double free or corruption (out): 0x00007fff7a36ce50 ***
+			// matrix[currentRow*columnCount+currentColumn] = &value;
 			
 
             }
