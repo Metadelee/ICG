@@ -1,3 +1,14 @@
+//--------------------------------------------------------------------------------------
+//
+// Subject      : Computer Graphics
+// Project      : Sheet 2 : Exercise 2  Pointers, Arrays, and All the Rest
+// Authors      : Lina Gundelwein,  Letitia Parcalabescu, Anushalakshmi Manila
+// Date     	: Nov 6, 2016
+// Description  : Complete the given functions
+//
+//--------------------------------------------------------------------------------------
+// compiled with g++ -std=c++11
+
 #include <stdio.h>
 #include <stdlib.h>
 

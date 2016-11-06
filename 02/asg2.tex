@@ -1,0 +1,47 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[svgnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{bbm}
+
+\title{Computer Graphics: Assignment 02} % Title
+
+\author{Lina Gundelwein, Letitia Parcalabescu, Anushalakshmi Manila} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle 
+
+\section{Preprocessor} 
+With the definition \verb|#define SQUARE(a) a*a| g and h return wrong results, because the macro only does the textual replacement and thus you end up with:
+\begin{align*}
+&g(1) = 1-1*1-1 = -1\\
+&g(2) = 1-2*1-2 = -3\\
+&...\\
+&h(1) = 1./1*1 = 1\\
+&h(2) = 1./2*2 = 1\\
+&...
+\end{align*}
+
+\section{Pointers, Arrays, and All the Rest}
+The matrix parameter requires a double pointer because it is a pointer to an array and an array is referenced by a pointer. $\rightarrow$ thus a double pointer is needed
+%TODO I think this is wrong
+
+
+\section{Output Devices}
+Generating the whole array may take $T = \frac{1}{50Hz} = 0.02\,s$. Generating one pixel may thus take $ T_p = \frac{1}{1000 \cdot 1000 \cdot 50Hz} = 2\times 10^{-8}\,s$.
+
+\section{Lighting Models}
+\begin{itemize}
+\item ambient: The general brightness of the scene, intensity value will be added to each pixel
+\\diffuse: Light reflection such that an incident ray is reflected at many angles following the lambertian emission law. The surface will have the same radiance from all angles.
+\\specular:  Light reflection such that the angle of incidence roughly equals the angle of reflection
+\item The exponent describes the decay of reflectivity when differing from the main reflection direction $R=2N(NL)-L$. A high exponent leads to a mirror-like reflection while a low exponent leads to a rough looking surface.
+\item To get an intensity gradient, one interpolates between the face normals. To preserve sharp edges, multiple face normals are stored per vertex.
+\end{itemize}
+\end{document}
