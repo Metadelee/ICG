@@ -148,6 +148,7 @@ bool multiplyMatrices(int *matrix1, int rows1, int columns1,
   		resultMatrix[i*columns2 + j] = multiplyVectors(&matrix1[i*columns1], columns1, 1, &matrix2[j], rows2, columns2);
 	}
   }
+	return true;
 
 }
 
