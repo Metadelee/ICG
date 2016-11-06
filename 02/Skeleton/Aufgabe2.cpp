@@ -5,7 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-
+using namespace std;
 // Splits a string in multiple parts which are separated by blanks
 void tokenize(const std::string line, std::vector<std::string> &tokens)
 {
@@ -58,23 +58,17 @@ bool loadMatrix(const char *filename, int **matrix, int& rowCount, int& columnCo
 
 	// initialize matrix
 	*matrix = new int[ rowCount * columnCount];
-	
-	// copy values to the matrix
+
 	for( size_t currentRow=0; currentRow<rowCount; currentRow++) 
 	{
 		for( size_t currentColumn=0; currentColumn<columnCount; currentColumn++) 
 		{
 			int value = stoi(lines[currentRow][currentColumn], 0, 10);
-			cout <<(value) <<"\n";
-			//TODO: Write the stored values "value" to the correct position in the matrix (currentRow, currentColumn)
-			// TODO: this leads to segmentation fault!
-			// *matrix[currentRow*columnCount+currentColumn] = value;
-			// and this leads to Error in `./a.out': double free or corruption (out): 0x00007fff7a36ce50 ***
-			// matrix[currentRow*columnCount+currentColumn] = &value;
-			
+			(*matrix)[currentRow*columnCount+currentColumn]= value;
 
             }
 	}
+	
 
 	return true;
 }
@@ -109,7 +103,7 @@ int multiplyVectors(int *vector1, int size1, int offset1,
                     int *vector2, int size2, int offset2)
 {
   int result = 0;
-  // TODO:
+
   // Multiply the two vectors with regard to "offset" being the difference between two different
   // values within the array vectorX
   for (int i = 0; i < size1; ++i) 
@@ -133,13 +127,15 @@ bool multiplyMatrices(int *matrix1, int rows1, int columns1,
     return false;
   }
 
-  //TODO:
   // Multiply the matrices matrix1 and matrix2. For that use the function
   // multiplyVectors. Hint: You have to use the column vectors for the second matrix,
   // but the values are stored in rows. Use the offset to correct that.
   for (int i = 0; i < rows1; ++i) 
   {
-  	resultMatrix[i] = multiplyVectors(&matrix1[i*columns1], columns1, 1, &matrix2[i], rows2, columns2);
+	for (int j = 0; j < columns2; j++)
+	{
+  		resultMatrix[i*columns2 + j] = multiplyVectors(&matrix1[i*columns1], columns1, 1, &matrix2[j], rows2, columns2);
+	}
   }
 
 }
