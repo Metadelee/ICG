@@ -1,5 +1,5 @@
 #include <Raytracer/Raytracer.h>
-
+#include<iostream>
 using namespace Raytracer;
 using namespace Raytracer::Scenes;
 using namespace Raytracer::Objects;
@@ -30,9 +30,15 @@ void Sphere::GetIntersection(const Ray &ray, float distance, Intersection &inter
 {
 	// TODO: Implementieren Sie die Berechnung von Position, Blickrichtung, Normale und Material am
 	// Schnittpunkt für den gegebenen Strahl und die gegebene Entfernung zum Schnittpunkt,
-    // d.h. füllen sie alle Werte der struct intersection.
-    // Der float-Wert distance enthält den Abstand Ursprung des Rays - Schnittpunkt, die ray Variable
-    // alle Informationen des gecasteten Strahls (siehe Ray-Klasse).
+	// d.h. füllen sie alle Werte der struct intersection.
+    	// Der float-Wert distance enthält den Abstand Ursprung des Rays - Schnittpunkt, die ray Variable
+    	// alle Informationen des gecasteten Strahls (siehe Ray-Klasse).
+	intersection->position = ray->GetOrigin() + ray->GetDirection();
+	intersection->material = this->material;
+	intersection->normal = normalize(this->center - intersection->position); 
+	
+//TODO:	intersection->viewDirection = How do we get the position of the camera?? I think it is camera.lookat maybe but it has only getWidth and getHeight functions..
+	std::cout << "test\n";
 }
 
 bool Sphere::HitTest(const Ray &ray, RayHit &hit) const
