@@ -1,5 +1,5 @@
 #include <Raytracer/Raytracer.h>
-
+#include<iostream>
 using namespace Raytracer;
 
 Raytracer::RayHit::RayHit()
