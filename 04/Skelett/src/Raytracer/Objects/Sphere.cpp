@@ -42,27 +42,37 @@ void Sphere::GetIntersection(const Ray &ray, float distance, Intersection &inter
 	
 }
 
-bool Sphere::HitTest(const Ray &ray, RayHit &hit) const
+// useful functions. The first one is for debugging purposes.
+void printFloat3(float3 a)
 {
-	//TODO: Somehow I beleive this is too complicated...
-	// Took this from http://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
-	float x0,x1;
-	float a = length(ray.GetDirection()*ray.GetDirection());
-	float b = 2.*length(ray.GetDirection()*(ray.GetOrigin()-this->center));
-	float c = length((ray.GetOrigin()-this->center)*(ray.GetOrigin()-this->center))-this->radius2;
- 	float discr = b * b - 4 * a * c;
-	if(discr < 0) return false;
-	else if(discr == 0) x0 = x1 = - 0.5 * b / a;
+	std::cout << a[0] << " " << a[1] << " " << a[2] << std::endl;
+}
+
+float scalarProd2(float3 a, float3 b)
+{
+	return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+}
+
+bool Sphere::HitTest(const Ray &ray, RayHit &hit) const
+{	
+	float x0, x1;
+	float a = scalarProd2(ray.GetDirection(), ray.GetDirection());
+	float b = 2 * scalarProd2(ray.GetDirection(), ray.GetOrigin() - center);
+	float c = scalarProd2(ray.GetOrigin() - center, ray.GetOrigin() - center) - radius2;
+
+	float discr = b * b - 4 * a * c;
+	if (discr < 0) return false;
+	else if (discr == 0) x0 = x1 = -0.5 * b / a;
 	else {
 		float q = (b > 0) ?
-		-0.5 * (b + sqrt(discr)) :
-		-0.5 * (b - sqrt(discr));
+			-0.5 * (b + sqrt(discr)) :
+			-0.5 * (b - sqrt(discr));
 		x0 = q / a;
 		x1 = c / q;
 	}
 	if (x0 > x1) std::swap(x0, x1);
-	hit.Set(length(ray.GetOrigin() + x0*ray.GetDirection()), this);
-	
+	hit.Set(&ray, length(ray.GetOrigin() + x0*ray.GetDirection()), this);
+
 	return true;
 	// TODO: Implementieren Sie die Schnittpunktberechnung. Falls der Strahl die Kugel trifft,
 	// setzen Sie hit auf this und die Entfernung zum nächstgelegenen Schnittpunkt und geben Sie
