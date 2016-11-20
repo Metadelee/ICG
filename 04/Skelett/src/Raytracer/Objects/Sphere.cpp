@@ -32,14 +32,14 @@ void Sphere::GetIntersection(const Ray &ray, float distance, Intersection &inter
 	// TODO: Implementieren Sie die Berechnung von Position, Blickrichtung, Normale und Material am
 	// Schnittpunkt für den gegebenen Strahl und die gegebene Entfernung zum Schnittpunkt,
 	// d.h. füllen sie alle Werte der struct intersection.
-    	// Der float-Wert distance enthält den Abstand Ursprung des Rays - Schnittpunkt, die ray Variable
-    	// alle Informationen des gecasteten Strahls (siehe Ray-Klasse).
+	// Der float-Wert distance enthält den Abstand Ursprung des Rays - Schnittpunkt, die ray Variable
+	// alle Informationen des gecasteten Strahls (siehe Ray-Klasse).
 	intersection.position = ray.GetOrigin() + ray.GetDirection();
 	intersection.material = this->material;
-	intersection.normal = normalize(this->center - intersection.position); 
-	intersection.viewDirection = intersection.position-float3(0.0f, 0.0f, 15.0f);
-//TODO:	intersection->viewDirection = How do we get the position of the camera?? I think it is camera.eye maybe but it has only getWidth and getHeight functions..
-	
+	intersection.normal = normalize(this->center - intersection.position);
+	intersection.viewDirection = intersection.position - float3(0.0f, 0.0f, 15.0f);
+	//TODO:	intersection->viewDirection = How do we get the position of the camera?? I think it is camera.eye maybe but it has only getWidth and getHeight functions..
+
 }
 
 // useful functions. The first one is for debugging purposes.
@@ -54,7 +54,7 @@ float scalarProd2(float3 a, float3 b)
 }
 
 bool Sphere::HitTest(const Ray &ray, RayHit &hit) const
-{	
+{
 	float x0, x1;
 	float a = scalarProd2(ray.GetDirection(), ray.GetDirection());
 	float b = 2 * scalarProd2(ray.GetDirection(), ray.GetOrigin() - center);
@@ -77,5 +77,5 @@ bool Sphere::HitTest(const Ray &ray, RayHit &hit) const
 	// TODO: Implementieren Sie die Schnittpunktberechnung. Falls der Strahl die Kugel trifft,
 	// setzen Sie hit auf this und die Entfernung zum nächstgelegenen Schnittpunkt und geben Sie
 	// true zurück (siehe RayHit-Klasse).
-//	return false;
+	//	return false;
 }
