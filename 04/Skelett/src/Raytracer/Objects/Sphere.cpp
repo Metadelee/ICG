@@ -37,9 +37,7 @@ void Sphere::GetIntersection(const Ray &ray, float distance, Intersection &inter
 	intersection.position = ray.GetOrigin() + ray.GetDirection();
 	intersection.material = this->material;
 	intersection.normal = normalize(this->center - intersection.position);
-	intersection.viewDirection = intersection.position - float3(0.0f, 0.0f, 15.0f);
-	//TODO:	intersection->viewDirection = How do we get the position of the camera?? I think it is camera.eye maybe but it has only getWidth and getHeight functions..
-
+	intersection.viewDirection = intersection.position - ray.GetOrigin();
 }
 
 // useful functions. The first one is for debugging purposes.
