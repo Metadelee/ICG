@@ -14,7 +14,7 @@ float3 PointLight::ComputeDirectContribution(const Intersection &intersection, c
 {
   // TODO: Implement the calculation of the diffuse and specular lighting according to the
   // Phong light model at the point determined by the intersection calculation.
-	float3 I = normalize(intersection.material->GetAmbient()*intensity);	
+	float3 I = (intersection.material->GetAmbient()*intensity);	
 	float3 L = normalize(this->position-intersection.position);
 
 	float NdotL = dot(intersection.normal, L);
