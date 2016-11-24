@@ -14,15 +14,15 @@ float3 PointLight::ComputeDirectContribution(const Intersection &intersection, c
 {
   // TODO: Implement the calculation of the diffuse and specular lighting according to the
   // Phong light model at the point determined by the intersection calculation.
-	float3 I = intersection.material->GetAmbient()*intensity;	
-	float3 L = this->position-intersection.position;
+	float3 I = normalize(intersection.material->GetAmbient()*intensity);	
+	float3 L = normalize(this->position-intersection.position);
 
 	float NdotL = dot(intersection.normal, L);
 	if (NdotL >0){
 		I += intersection.material->GetDiffuse()*intensity*NdotL;
 		
-		float3 R = (2.0f*intersection.normal*NdotL)-L;
-		float RdotV = dot(R,intersection.viewDirection);
+		float3 R = normalize((2.0f*intersection.normal*NdotL)-L);
+		float RdotV = dot(R,normalize(intersection.viewDirection));
 		if (RdotV > 0){
 			I+= intersection.material->GetSpecular()*intensity*powf(RdotV, intersection.material->GetShininess());
 		}
