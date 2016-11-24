@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[svgnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{bbm}
+
+\title{Computer Graphics: Assignment 04} % Title
+
+\author{Lina Gundelwein, Letitia Parcalabescu, Anushalakshmi Manila} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle 
+
+\section{Euler Angles and even more Transformations}
+%for 5.1-2: the sun is in the coordinate center, rotates around itself (y axis) with arbitrary angle, earth rotates around the original y axis around coordinate center with arbitrary angle, then there has to be a rotation about the new, by 23.5° rotated, y-axis
+the moon rotates around the a translated and rotating y-axis...
+\begin{itemize}
+\item Set $sun$ to coordinate center
+\item PushMatrix()
+\begin{itemize}
+\item Rotate $sun$ about angle $\phi_{sun}$ around y-axis
+\end{itemize}
+\item popMatrix()
+\end{itemize}
+
+
+\begin{itemize}
+\item PushMatrix()
+\begin{itemize}
+\item Rotate $earth$ about $\frac{360}{365}$° around y-axis
+\item Translate $earth$ and $moon$ about $dist_{earth-sun}$
+\item PushMatrix()
+\begin{itemize}
+\item Rotate $earth$ about $23.5°$ around z-axis
+\item Rotate $earth$ about $\phi_{earth}$ around y-axis
+\end{itemize}
+\item PopMatrix()
+\item PushMatrix()
+\begin{itemize}
+\item Rotate $moon$ about $\frac{360}{12}$ around y-axis
+\item Translate $moon$ about $dist_{moon-earth}$
+\end{itemize}
+\item PopMatrix()
+\end{itemize}
+
+\item popMatrix()
+\end{itemize}
+\end{document}
