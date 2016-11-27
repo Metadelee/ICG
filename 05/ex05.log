@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2016.10.17)  27 NOV 2016 10:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2016.10.17)  27 NOV 2016 15:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -323,9 +323,9 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
 Missing character: There is no Â in font cmr10!
 Missing character: There is no ° in font cmr10!
+ [3 <./ex_05_1_2.jpg>]
 Missing character: There is no Â in font cmr10!
 Missing character: There is no ° in font cmr10!
- [3 <./ex_05_1_2.jpg>]
 Missing character: There is no Â in font cmr10!
 Missing character: There is no ° in font cmr10!
  [4] (./ex05.aux) ) 
@@ -347,7 +347,7 @@ fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2016/texmf-dist/fonts/type
 msfonts/cm/cmr7.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmsy10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb
 >
-Output written on ex05.pdf (4 pages, 748508 bytes).
+Output written on ex05.pdf (4 pages, 748816 bytes).
 PDF statistics:
  59 PDF objects out of 1000 (max. 8388607)
  40 compressed objects within 1 object stream
