@@ -46,6 +46,8 @@ void BuildScene(Scene &scene)
 
 	scene.AddLight(new PointLight(float3(-15.0f, 15.0f, 20.0f), 40.0f));
 	scene.AddLight(new PointLight(float3(2, 0, 0), 4.0f));
+
+	//scene.AddObject(new Sphere(float3(2, 0, 0), 1.0f, material));
 }
 
 /**

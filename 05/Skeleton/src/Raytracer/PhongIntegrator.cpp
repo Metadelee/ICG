@@ -27,8 +27,8 @@ float3 PhongIntegrator::GetColor(Ray &ray, const Scene &scene)
 		color += scene.GetLights()[i]->ComputeDirectContribution(intersection, scene);
 
 	// If the object has a material, add its ambient color.
-	/*if (intersection.material != NULL)
-		color += intersection.material->GetAmbient();*/
+	if (intersection.material != NULL)
+		color += intersection.material->GetAmbient();
 
 	return color;
 }
