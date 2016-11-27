@@ -1,12 +1,12 @@
 #include <limits>
-
+# include<iostream>
 #include <Raytracer/Raytracer.h>
 
 using namespace Raytracer;
 using namespace Raytracer::Scenes;
 
 bool SimpleAccelerator::Cast(const Ray &ray, float maxDistance) const
-{
+{	
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
 		RayHit hit;
@@ -31,7 +31,7 @@ bool SimpleAccelerator::Trace(const Ray &ray, RayHit &hit) const
 		RayHit objectHit;
 		if (objects[i]->HitTest(ray, objectHit) &&
 			(hit.GetObject() == NULL || objectHit.GetDistance() < hit.GetDistance()))
-		{
+		{	
 			hit = objectHit;
 		}
 	}

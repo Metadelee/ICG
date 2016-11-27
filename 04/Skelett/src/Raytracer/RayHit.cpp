@@ -21,6 +21,7 @@ Raytracer::RayHit::RayHit(const Ray *ray, float distance, const Scenes::IPrimiti
 	this->ray = ray;
 	this->distance = distance;
 	this->object = object;
+	std::cout << "252525";
 }
 
 Raytracer::RayHit::RayHit(RayHit &hit)
@@ -28,6 +29,7 @@ Raytracer::RayHit::RayHit(RayHit &hit)
 	this->ray = hit.ray;
 	this->distance = hit.distance;
 	this->object = hit.object;
+	std::cout << "mb[ai";
 }
 
 float Raytracer::RayHit::GetDistance() const
@@ -40,6 +42,7 @@ float Raytracer::RayHit::GetDistance() const
 bool Raytracer::RayHit::GetIntersection(Intersection &intersection)
 {
 	if (ray == NULL || object == NULL)
+		//std::cout << (ray == NULL) << (object == NULL) << std::endl;
 		return false;
 
 	object->GetIntersection(*ray, distance, intersection);
