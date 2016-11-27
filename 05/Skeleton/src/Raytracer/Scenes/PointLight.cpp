@@ -38,6 +38,7 @@ float3 PointLight::ComputeDirectContribution(const Intersection &intersection, c
 
 	float NdotL = dot(intersection.normal, L);
 	if (NdotL >0){
+		//intensity drops by inverse square law.
 		I += intersection.material->GetDiffuse()*NdotL*intensity/(dist2Light*dist2Light);
 
 		float3 R = normalize((2.0f*intersection.normal*NdotL)-L);
