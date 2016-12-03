@@ -160,6 +160,13 @@ bool SimpleRasterizer::Render(Image &image, const Scene &scene)
   meshes.clear();
   ScanObject(&scene);
 
+	mat4x4 viewTransform = scene.GetTransformation(); // not sure if this is the right one (probably not)
+	float near = camera->GetNearClip();
+	float far = camera->GetNearClip();
+	mat4x4 projectionTransform = perspective(camera->GetFov(), camera->GetAspect(), camera->GetNearClip(), camera->GetFarClip());
+
+	viewProjectionTransform = projectionTransform*viewTransform;
+
   //TODO Aufgabe 2.2: 
   // Create the projection from world to clipping coordinates.
   // For this, begin with the camera transformation (viewTransform) and
@@ -169,6 +176,7 @@ bool SimpleRasterizer::Render(Image &image, const Scene &scene)
   //Erstellen Sie dazu erst die Kameratransformation (viewTransform)
   //und die Projektionstransformation (projectionTransform)und danach die 
   //viewProjectionTransform in dem Sie die beiden korrekt aufeinander anwenden.
+
   // Render all meshes we found.
   this->image = &image;
   foreach(const Mesh *, mesh, meshes)
