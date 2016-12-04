@@ -99,24 +99,15 @@ void SimpleRasterizer::RenderMesh(const Mesh *mesh)
   if (mesh == NULL)
     return;
 
-	mat4x4 matrix =	mesh->GetGlobalToLocal();
-	mat4x4 matrix1 = glm::transpose(glm::inverse(matrix));
+	mat4x4 modelTransform =	mesh->GetTransformation();
+	mat4x4 modelTransformNormals = glm::transpose(glm::inverse(modelTransform));
 	std::vector<Triangle> triangles = mesh->GetTriangles();
 	for (unsigned i=0; i < triangles.size(); i++) {
-		glm::vec3 normal[3] = triangles[i].normal;
-		glm::vec3 position[3] = triangles[i].position;
-		for (int j = 0; j < 3; j++){
-		// add fourth dimension and transform
-		glm::vec4 normal_new = matrix1*glm::vec4( normal[j], 1.0 );
-		glm::vec4 position_new = matrix*glm::vec4( position[j], 1.0 );
-		// remove fourth dimension	
-		glm::vec3 normal_new1(normal_new/normal_new[3]);
-		glm::vec3 position_new1(position_new/position_new[3]);	
-		triangles[i].SetVertex(j, position_new1, normal_new1, triangles[i].color[j]);
-		}
-		TransformAndLightTriangle(triangles[i], matrix, matrix1);
+
+		TransformAndLightTriangle(triangles[i], modelTransform, modelTransformNormals);
 		DrawTriangle(triangles[i]);
 	}
+
 
   //TODO Aufgabe 2.1
   // Calculate the model transformations for the triangle mesh "mesh", as well as the

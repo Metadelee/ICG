@@ -83,6 +83,20 @@ void SimpleRasterizer::TransformAndLightTriangle(Triangle &t,
                                                  const mat4 &modelTransform,
                                                  const mat4 &modelTransformNormals)
 {
+
+	for (int j = 0; j < 3; j++){
+		// transform
+		glm::vec3 normal = vec3(modelTransformNormals*glm::vec4( t.normal[j], 1.0 ));
+		glm::vec4 position = modelTransform*glm::vec4( t.position[j], 1.0 );	
+		t.color[j] =  LightVertex(position, normal, t.color[j]);
+		position = (viewProjectionTransform*position);
+		glm::vec3 position_ = vec3(position/position[3])+vec3(1,1,1);
+		position_.x = image->GetWidth()*position_.x/2;
+		position_.y = image->GetHeight()*(1-position_.y/2);
+		t.position[j] = position_;
+
+
+	}
   //TODO Exercise 2.3
   // Implement the transformations and lighting of triangle t.
   // For this, use the function LightVertex. The final triangle t should be in world coordinates.
@@ -96,8 +110,8 @@ void SimpleRasterizer::TransformAndLightTriangle(Triangle &t,
 
 void SimpleRasterizer::RenderMesh(const Mesh *mesh)
 {
-	if (mesh == NULL)
-	    return;
+ if (mesh == NULL)
+    return;
 
 	mat4x4 modelTransform =	mesh->GetTransformation();
 	mat4x4 modelTransformNormals = glm::transpose(glm::inverse(modelTransform));
