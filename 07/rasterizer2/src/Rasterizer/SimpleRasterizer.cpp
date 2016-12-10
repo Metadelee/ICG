@@ -35,7 +35,7 @@ void SimpleRasterizer::DrawSpan(int x1, int x2, int y, float z1, float z2, vec3 
 {
 	for(int i = std::min(x1,x2); i< std::min(image->GetWidth(),std::max(x1,x2));++i){
 		if ((y > 0) && (y < image->GetHeight())){
-			image->SetPixel(i,y,color1);
+			image->SetPixel(i,y,color1 * float(float(x2-i)/(x2-x1))+ color2 *float(float(i-x1)/(x2-x1)));
 		}
 	}
   // TODO Ersetzen des Zeichnens der Eckpunkte 
@@ -46,7 +46,7 @@ void SimpleRasterizer::DrawSpan(int x1, int x2, int y, float z1, float z2, vec3 
 
 void SimpleRasterizer::DrawTriangle(const Triangle &t)
 {
-  for (int i = 0; i < 3; ++i)
+  /*for (int i = 0; i < 3; ++i)
   {
 
     int x = (int)t.position[i].x;
@@ -55,7 +55,7 @@ void SimpleRasterizer::DrawTriangle(const Triangle &t)
     {
       image->SetPixel(x, y, t.color[i]);
     }
-  }
+  }*/
 
 	// (complicated way to) order the points by their y value; 
 	vector<pair<int,int> > V;  
@@ -66,9 +66,10 @@ void SimpleRasterizer::DrawTriangle(const Triangle &t)
 	std::sort(V.begin(),V.end());
 	
 	glm::vec3 color1 = t.color[V[0].second]; // TODO this is a workaround cause i did not know which color vector to give
-	glm::vec3 color2 = t.color[V[0].second];
+	glm::vec3 color2 = t.color[V[1].second];
 	int y_t = t.position[V[0].second].y;
-	int end = y_t+3;
+	int y_b = t.position[V[2].second].y;
+	int y = y_t;
 	int x_l = t.position[V[0].second].x;
 	int cur_l = V[0].second;
 	int next_l = ((V[0].second+3)-1)%3;
@@ -76,14 +77,26 @@ void SimpleRasterizer::DrawTriangle(const Triangle &t)
 	int cur_r = V[0].second;
 	int next_r = ((V[0].second+3)+1)%3;
 	do{	
-		DrawSpan(x_l, x_r, y_t, 1.0, 1.0, color1,color2);//TODO check colour and z for shading
-		y_t +=1;
+		color1 = t.color[V[1].second] + (t.color[V[0].second]-t.color[V[1].second]) *float(float(y_b-y)/(y_b-y_t));
+		//color1 = t.color[V[0].second]* float(float(y_b-y)/(y_b-y_t))+ t.color[V[1].second] *float(float(y-y_t)/(y_b-y_t));
+		/*float l1 = float(float(y_m -y_b)*(x_l -t.position[V[2].second].x)+float(t.position[V[2].second].x-t.position[V[1].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
+		float l2 = float(float(y_b -y_t)*(x_l -t.position[V[2].second].x)+float(t.position[V[0].second].x-t.position[V[2].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
+		float l3 = 1- l1-l2;
+		color1= l1*t.color[V[0].second]+l2*t.color[V[1].second]+l3*t.color[V[2].second];
+		l1 = float(float(y_m -y_b)*(x_r -t.position[V[2].second].x)+float(t.position[V[2].second].x-t.position[V[1].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
+		l2 = float(float(y_b -y_t)*(x_r -t.position[V[2].second].x)+float(t.position[V[0].second].x-t.position[V[2].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
+		l3 = 1- l1-l2;
+		color2= l1*t.color[V[0].second]+l2*t.color[V[1].second]+l3*t.color[V[2].second];*/
+		color2 = t.color[V[2].second] + (t.color[V[0].second]-t.color[V[2].second]) *float(float(y_b-y)/(y_b-y_t));//
+
+		DrawSpan(x_l, x_r, y, 1.0, 1.0, color1,color2);//TODO check colour and z for shading
+		y +=1;
 		x_l += (t.position[next_l].x-t.position[cur_l].x)/(t.position[next_l].y-t.position[cur_l].y);
 		x_r += (t.position[next_r].x-t.position[cur_r].x)/(t.position[next_r].y-t.position[cur_r].y); 
 		if (y_t >= t.position[next_l].y) {cur_l = next_l; next_l= ((next_l+3)-1)%3;}
 		if (y_t >= t.position[next_r].y) {cur_r = next_r; next_r= ((next_r+3)+1)%3;}
 
-	}while(y_t < t.position[V[2].second].y);
+	}while(y < t.position[V[2].second].y);
 
 	
   // TODO Ersetzen des Zeichnens der Eckpunkte 
