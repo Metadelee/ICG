@@ -35,7 +35,12 @@ void SimpleRasterizer::DrawSpan(int x1, int x2, int y, float z1, float z2, vec3 
 {
 	for(int i = std::min(x1,x2); i< std::min(image->GetWidth(),std::max(x1,x2));++i){
 		if ((y > 0) && (y < image->GetHeight())){
-			image->SetPixel(i,y,color1 * float(float(x2-i)/(x2-x1))+ color2 *float(float(i-x1)/(x2-x1)));
+			if(x2-x1 != 0){
+				image->SetPixel(i,y,color1 * float(float(x2-i)/(x2-x1))+ color2 *float(float(i-x1)/(x2-x1)));
+			}
+			else{
+				image->SetPixel(i,y,color1);
+			}
 		}
 	}
   // TODO Ersetzen des Zeichnens der Eckpunkte 
@@ -76,18 +81,12 @@ void SimpleRasterizer::DrawTriangle(const Triangle &t)
 	int x_r = t.position[V[0].second].x;
 	int cur_r = V[0].second;
 	int next_r = ((V[0].second+3)+1)%3;
+	
+//	float my = float(float(y_b-y)/(y_b-y_t));
 	do{	
-		color1 = t.color[V[1].second] + (t.color[V[0].second]-t.color[V[1].second]) *float(float(y_b-y)/(y_b-y_t));
-		//color1 = t.color[V[0].second]* float(float(y_b-y)/(y_b-y_t))+ t.color[V[1].second] *float(float(y-y_t)/(y_b-y_t));
-		/*float l1 = float(float(y_m -y_b)*(x_l -t.position[V[2].second].x)+float(t.position[V[2].second].x-t.position[V[1].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
-		float l2 = float(float(y_b -y_t)*(x_l -t.position[V[2].second].x)+float(t.position[V[0].second].x-t.position[V[2].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
-		float l3 = 1- l1-l2;
-		color1= l1*t.color[V[0].second]+l2*t.color[V[1].second]+l3*t.color[V[2].second];
-		l1 = float(float(y_m -y_b)*(x_r -t.position[V[2].second].x)+float(t.position[V[2].second].x-t.position[V[1].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
-		l2 = float(float(y_b -y_t)*(x_r -t.position[V[2].second].x)+float(t.position[V[0].second].x-t.position[V[2].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
-		l3 = 1- l1-l2;
-		color2= l1*t.color[V[0].second]+l2*t.color[V[1].second]+l3*t.color[V[2].second];*/
-		color2 = t.color[V[2].second] + (t.color[V[0].second]-t.color[V[2].second]) *float(float(y_b-y)/(y_b-y_t));//
+		float my = (y_b-y_t != 0)? float(float(y_b-y)/(y_b-y_t)):0;
+		color1 = t.color[V[1].second] + (t.color[V[0].second]-t.color[V[1].second]) *my;
+		color2 = t.color[V[2].second] + (t.color[V[0].second]-t.color[V[2].second]) *my;//
 
 		DrawSpan(x_l, x_r, y, 1.0, 1.0, color1,color2);//TODO check colour and z for shading
 		y +=1;
@@ -97,6 +96,15 @@ void SimpleRasterizer::DrawTriangle(const Triangle &t)
 		if (y_t >= t.position[next_r].y) {cur_r = next_r; next_r= ((next_r+3)+1)%3;}
 
 	}while(y < t.position[V[2].second].y);
+
+		/*float l1 = float(float(y_m -y_b)*(x_l -t.position[V[2].second].x)+float(t.position[V[2].second].x-t.position[V[1].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
+		float l2 = float(float(y_b -y_t)*(x_l -t.position[V[2].second].x)+float(t.position[V[0].second].x-t.position[V[2].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
+		float l3 = 1- l1-l2;
+		color1= l1*t.color[V[0].second]+l2*t.color[V[1].second]+l3*t.color[V[2].second];
+		l1 = float(float(y_m -y_b)*(x_r -t.position[V[2].second].x)+float(t.position[V[2].second].x-t.position[V[1].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
+		l2 = float(float(y_b -y_t)*(x_r -t.position[V[2].second].x)+float(t.position[V[0].second].x-t.position[V[2].second].x)*(y - y_b))/((y_m-y_b)*(t.position[V[0].second].x-t.position[V[2].second].x)+(t.position[V[2].second].x-t.position[V[1].second].x)*(y_t-y_b));
+		l3 = 1- l1-l2;
+		color2= l1*t.color[V[0].second]+l2*t.color[V[1].second]+l3*t.color[V[2].second];*/
 
 	
   // TODO Ersetzen des Zeichnens der Eckpunkte 
