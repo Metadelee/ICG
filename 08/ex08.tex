@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[svgnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{bbm}
+
+\title{Computer Graphics: Assignment 08} % Title
+
+\author{Lina Gundelwein, Letitia Parcalabescu, Anushalakshmi Manila} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle 
+
+\section{Clipping}
+\begin{figure}[htb]
+\includegraphics[scale=0.5]{01}
+\end{figure}
+First line
+\begin{itemize}
+\item Outcode($P_1$) $\vee$ Outcode($P_2$) $\neq 0$ $\rightarrow$ no trivial accept
+\item Outcode($P_1$) $\wedge$ Outcode($P_2$)$ == 0$ $\rightarrow$ no trivial reject
+\item Calculate $S_1$
+\item Outcode($P_1$) $\vee$ Outcode($S_1$) $== 0$ $\rightarrow$ trivial accept
+\end{itemize}
+Second line
+\begin{itemize}
+\item Outcode($P_3$) $\vee$ Outcode($P_4$) $\neq 0$ $\rightarrow$ no trivial accept
+\item Outcode($P_3$) $\wedge$ Outcode($P_4$)$ == 0$ $\rightarrow$ no trivial reject
+\item Calculate $S_2$
+\item Outcode($P_4$) $\vee$ Outcode($S_2$) $\neq 0$ $\rightarrow$ no trivial accept
+\item Outcode($P_4$) $\vee$ Outcode($S_2$) $== 0$ $\rightarrow$ no trivial reject
+\item Calculate $S_3$
+\item Outcode($S_3$) $\vee$ Outcode($S_2$) $==0$ $\rightarrow$ trivial accept
+
+\end{itemize}
+
+\end{document}
