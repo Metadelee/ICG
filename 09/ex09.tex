@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[svgnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{bbm}
+
+\title{Computer Graphics: Assignment 09} % Title
+
+\author{Lina Gundelwein, Letitia Parcalabescu, Anushalakshmi Manila} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle 
+
+\section{Perception}
+\begin{enumerate}
+\item Red and green are opponent colors such that they cannot be combined with each other: There is one set cells reactive to red light and one set reactive to blue light. The red-reactive neurons fire when red light enters the retina, indicating we look at something red. If they do not fire, it indicates that we look at something green. As they cannot fire and not fire at the same time there is no reddish green. A reddish yellow however is possible as yellow is perceived by another set of cells.
+\item Very dim stars have a intensity to low to be perceived by cones, only by the more light sensitive rods. As there are no rods in the center of the eye, the astronomer cannot so the star when focusing on it, but rather have to look out of the corner of there eye.
+\item Metamers are different light spectra that are perceived as identical for a given observer. Metamers occur because each cone type responds to a broad range of wavelengths, and there can be lights with different wavelength combinations that produce an equivalent receptor response and thereby color perception.
+\end{enumerate}
+
+\section{3D Visual Perception}
+\begin{itemize}
+\item Anaglyph images are an overlay of two images from slightly different perspectives with different color filters, typically one red and one cyan. To see the 3D image one has to look through glasses which have a cyan color filter on one eye and a red color filter on the other side. Each eye will just see one of the images (as you cannot see the cyan image through the cyan glass) and therewith only one of the perspectives. The brain fuses the two perspective images to a 3D image
+\item Polarized light vibrates on only one plane. Similar to the two images that make up anaglyph images, a movie can be recorded with two cameras from slightly different perspectives and can then be projected through two differently polarized filters. The viewer has to wear glasses with two accordingly polarized lenses, such that one eye sees one perspective and the other one the slightly different one.
+\end{itemize}
+
+\section{Color Systems}
+\begin{enumerate}
+\item 
+\begin{itemize}
+\item additive:  combination of colors by addition of the spectra, e.g. CRT monitors, multiple projectors on one screen
+\item subtractive: combination of colors by multiplication of the spectra, e.g. photographic film, color pens, color printer
+\end{itemize}
+\item CMYK: (0,1,1,0) HSV: (0, 1, 1) HSL: (0,1,0.5) (formulas see slides)
+\item to produce a pure black: mixture of all colors mostly looks brownish and printing only one black ink is less expensive than printing 3 different color layers
+\end{enumerate}
+\end{document}
